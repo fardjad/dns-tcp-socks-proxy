@@ -216,12 +216,6 @@ int udp_listener() {
       error("[!] Error opening logfile.");
   }
 
-  printf("[*] No errors, backgrounding process.\n");
-
-  // daemonize the process.
-  if(fork() != 0) { exit(0); }
-  if(fork() != 0) { exit(0); }
-
   setuid(getpwnam(USERNAME)->pw_uid);
   setgid(getgrnam(GROUPNAME)->gr_gid);
   socklen_t dns_client_size = sizeof(struct sockaddr_in);
