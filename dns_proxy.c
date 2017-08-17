@@ -34,6 +34,8 @@
 #include <time.h>
 #include <errno.h>
 
+#include "utils.h"
+
 int   SOCKS_PORT  = 9050;
 char *SOCKS_ADDR  = { "127.0.0.1" };
 int   LISTEN_PORT = 53;
@@ -82,7 +84,7 @@ char *string_value(char *value) {
 void parse_config(char *file) {
   char line[80];
 
-  FILE *f = fopen(file, "r");
+  FILE *f = smart_fopen(file, "r");
   if (!f)
     error("[!] Error opening configuration file");
 
@@ -118,7 +120,7 @@ void parse_resolv_conf() {
   regmatch_t pmatch[1];
   regcomp(&preg, "^[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+\n$", REG_EXTENDED);
 
-  FILE *f = fopen(RESOLVCONF, "r");
+  FILE *f = smart_fopen(RESOLVCONF, "r");
   if (!f)
     error("[!] Error opening resolv.conf");
 
@@ -132,7 +134,7 @@ void parse_resolv_conf() {
   
   dns_servers = malloc(sizeof(char*) * NUM_DNS);
 
-  f = fopen(RESOLVCONF, "r");
+  f = smart_fopen(RESOLVCONF, "r");
   while (fgets(ns, 80, f) != NULL) {
     if (regexec(&preg, ns, 1, pmatch, 0) != 0)
       continue;
