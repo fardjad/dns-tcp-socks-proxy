@@ -1,1 +1,4 @@
 dns_proxy
+dns_proxy.conf
+resolv.conf
+
