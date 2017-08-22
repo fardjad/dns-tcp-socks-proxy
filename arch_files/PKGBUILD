@@ -1,11 +1,11 @@
-# Maintainer: Jack Tripper <jack@jtripper.net>
+# Maintainer: Fardjad Davari <public@fardjad.com>
 pkgname=tcpdnsproxy
-pkgver=20130128
+pkgver=20170822
 pkgrel=1
 pkgdesc="A transparent DNS-over-SOCKS proxy for use with transparent SOCKS proxies."
 arch=("any")
 makedepends=('git')
-url="http://github.com/jtRIPper/dns-tcp-socks-proxy"
+url="http://github.com/fardjad/dns-tcp-socks-proxy"
 license=('GPL')
 provides=('dns_proxy' 'tcpdnsproxy.service')
 _gitroot="git://github.com/jtRIPper/dns-tcp-socks-proxy.git"
@@ -27,8 +27,5 @@ build() {
 package() {
   cd "$srcdir/$_gitname"
   install -Dm755 dns_proxy "$pkgdir/usr/bin/dns_proxy"
-  sed -i 's#resolv\.conf#/etc/dns_proxy/resolv.conf#g' dns_proxy.conf
-  install -Dm644 dns_proxy.conf "$pkgdir/etc/dns_proxy/dns_proxy.conf"
-  install -Dm644 resolv.conf "$pkgdir/etc/dns_proxy/resolv.conf"
   install -Dm755 arch_files/tcpdnsproxy.service "$pkgdir/usr/lib/systemd/system/tcpdnsproxy.service"
 }
